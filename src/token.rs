@@ -23,8 +23,8 @@ pub enum Token {
     // Comparison
     Equal,
     NotEqual,
-    LessThan,
-    GreaterThan,
+    Less,
+    Greater,
     LessEqual,
     GreaterEqual,
 
