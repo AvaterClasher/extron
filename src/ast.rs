@@ -39,7 +39,7 @@ pub enum Statement {
     Let(Ident, Expr),
     Return(Expr),
     Expression(Expr),
-    Import(Ident),
+    Import(String),
     Set(Ident, Expr),
 }
 
