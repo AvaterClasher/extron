@@ -39,7 +39,7 @@ impl Store {
         }
     }
 
-    pub fn r#let(&mut self, name: String, val: Object) -> Option<Object> {
+    pub fn llet(&mut self, name: String, val: Object) -> Option<Object> {
         self.store.insert(name, val)
     }
 
@@ -58,6 +58,10 @@ impl Store {
                 }
             }
         }
+    }
+
+    pub fn iter (&self) -> std::collections::hash_map::Iter<String, Object> {
+        self.store.iter()
     }
 }
 

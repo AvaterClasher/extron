@@ -2,17 +2,20 @@ use std::collections::HashMap;
 
 use crate::eval::object::Object;
 
-pub fn add_globals() -> HashMap<String, Object> {
+use super::Res;
+
+pub fn add_globals() -> Res {
     let mut globals = HashMap::new();
     globals.insert(String::from("length"), Object::Inbuilt(length));
-    globals
+    return Res { globals, raw: None }
 }
 
 pub fn length(args: Vec<Object>) -> Object {
     if args.len() != 1 {
         return Object::Error(format!(
-            "wrong number of arguments. got={}, want=1",
+            "Wrong number of arguments. Got {}. Expected 1.",
             args.len()
+            
         ));
     }
     match &args[0] {
