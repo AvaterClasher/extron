@@ -42,6 +42,7 @@ impl Parser {
     pub fn parse_statement(&mut self) -> Option<Statement> {
         match self.current_token {
             Token::Let => self.parse_let_statement(),
+            Token::Set => self.parse_set_statement(),
             Token::Return => self.parse_return_statement(),
             Token::Import => self.parse_import_statement(),
             _ => self.parse_expr_statement(),
@@ -90,6 +91,38 @@ impl Parser {
         }
 
         Some(Statement::Let(name, lit))
+    }
+
+    pub fn parse_set_statement(&mut self) -> Option<Statement> {
+        match &self.peek_token {
+            Token::Ident(_) => self.next_token(),
+            _ => {
+                self.peek_error(Token::Ident(String::new()));
+                return None;
+            }
+        }
+
+        let name: Ident = match self.parse_ident() {
+            Some(Expr::Ident(ref mut s)) => s.clone(),
+            _ => return None,
+        };
+
+        if !self.expect_peek(Token::Assign) {
+            return None;
+        }
+
+        self.next_token();
+
+        let lit: Expr = match self.parse_expr(Precedence::Lowest) {
+            Some(e) => e,
+            None => return None,
+        };
+
+        while !self.current_token(Token::Semicolon) {
+            self.next_token();
+        }
+
+        Some(Statement::Set(name, lit))
     }
 
     pub fn parse_return_statement(&mut self) -> Option<Statement> {

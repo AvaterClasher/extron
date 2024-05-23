@@ -64,7 +64,7 @@ impl Eval {
                     Some(val)
                 } else {
                     let Ident(name) = i;
-                    self.store.borrow_mut().set(name, val);
+                    self.store.borrow_mut().r#let(name, val);
                     None
                 }
             }
@@ -80,7 +80,7 @@ impl Eval {
                     let mut store = self.store.borrow_mut();
                     match store.get(&name) {
                         Some(_) => {
-                            store.update(name, val);
+                            store.set(name, val);
                             None
                         }
                         None => Some(Object::Error(format!("identifier not found: {}", name))),

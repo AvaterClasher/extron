@@ -3,7 +3,7 @@ use std::collections::HashMap;
 
 pub fn new_globals() -> HashMap<String, Object> {
     let mut globals = HashMap::new();
-    globals.insert(String::from("log"), Object::Inbuilt(log));
+    globals.insert(String::from("print"), Object::Inbuilt(log));
     globals
 }
 

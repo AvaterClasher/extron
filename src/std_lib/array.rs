@@ -11,7 +11,7 @@ pub fn add_globals() -> HashMap<String, Object> {
 pub fn push(args: Vec<Object>) -> Object {
     if args.len() != 2 {
         return Object::Error(format!(
-            "Wrong number of arguments. got = {}, Expected = 2",
+            "Wrong number of arguments. Got {}. Expected 2.",
             args.len()
         ));
     }

@@ -39,18 +39,18 @@ impl Store {
         }
     }
 
-    pub fn set(&mut self, name: String, val: Object) -> Option<Object> {
+    pub fn r#let(&mut self, name: String, val: Object) -> Option<Object> {
         self.store.insert(name, val)
     }
 
-    pub fn update(&mut self, name: String, val: Object) -> Option<Object> {
+    pub fn set(&mut self, name: String, val: Object) -> Option<Object> {
         match self.store.get(&name) {
             Some(_e) => self.store.insert(name, val),
             None => {
                 if let Some(ref o) = self.outer {
                     let mut outer = o.borrow_mut();
                     match outer.get(&name) {
-                        Some(_) => outer.update(name, val),
+                        Some(_) => outer.set(name, val),
                         None => None,
                     }
                 } else {
