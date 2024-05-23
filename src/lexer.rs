@@ -104,7 +104,7 @@ impl Lexer {
                 }
             }
             ';' => Token::Semicolon,
-            '(' => Token::LeftBracket,
+            '(' => Token::LeftParen,
             ')' => Token::RightParen,
             '{' => Token::LeftBrace,
             '}' => Token::RightBrace,
