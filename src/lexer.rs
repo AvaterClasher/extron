@@ -5,6 +5,7 @@ lazy_static::lazy_static! {
     static ref KEYWORDS: HashMap<&'static str,Token> = {
         let mut keywords = HashMap::new();
         keywords.insert("let", Token::Let);
+        keywords.insert("set", Token::Set);
         keywords.insert("fn", Token::Fn);
         keywords.insert("if", Token::If);
         keywords.insert("else", Token::Else);

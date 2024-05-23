@@ -1,3 +1,5 @@
+#![allow(clippy::unnecessary_unwrap)]
+
 use crate::{ast::*, lexer::Lexer, token::Token};
 
 pub struct Parser {
@@ -10,7 +12,7 @@ pub struct Parser {
 impl Parser {
     pub fn new(lexer: Lexer) -> Self {
         let mut p: Parser = Parser {
-            lexer: lexer,
+            lexer,
             current_token: Token::Eof,
             peek_token: Token::Eof,
             errors: vec![],
@@ -29,7 +31,7 @@ impl Parser {
         let mut statements: Vec<Statement> = vec![];
         while self.current_token != Token::Eof {
             let stmt: Option<Statement> = self.parse_statement();
-            if stmt != None {
+            if stmt.is_some() {
                 statements.push(stmt.unwrap());
             };
             self.next_token();
@@ -398,10 +400,10 @@ impl Parser {
         match self.current_token {
             Token::Ident(ref mut ident) => idents.push(Ident(ident.clone())),
             _ => {
-                self.errors.push(String::from(format!(
+                self.errors.push(format!(
                     "Expected identifier as parameter name. Got: {}",
-                    self.current_token.to_string()
-                )));
+                    self.current_token
+                ));
                 return None;
             }
         };

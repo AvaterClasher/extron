@@ -1,14 +1,14 @@
 pub mod ast;
+pub mod eval;
 pub mod lexer;
 pub mod parser;
-// pub mod std_lib;
+pub mod std_lib;
 pub mod token;
-pub mod eval;
 
+use eval::{object::Object, store::Store, Eval};
 use lexer::Lexer;
 use parser::Parser;
 use std::{cell::RefCell, env, fs, rc::Rc};
-use eval::{object::Object, store::Store, Eval};
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -41,6 +41,5 @@ fn main() {
                 _ => println!("{}", o),
             }
         }
-        return;
     }
 }

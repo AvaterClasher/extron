@@ -1,11 +1,13 @@
-pub mod print;
+#![allow(clippy::unnecessary_unwrap)]
+
 pub mod lib;
 pub mod object;
+pub mod print;
 pub mod store;
 
 use crate::ast::*;
-use print::new_globals;
 use object::Object;
+use print::new_globals;
 use std::{cell::RefCell, collections::HashMap, rc::Rc};
 use store::Store;
 
@@ -244,8 +246,7 @@ impl Eval {
             .map(|a| self.eval_expr(a.clone()).unwrap_or(Object::Null))
             .collect::<Vec<_>>();
 
-        let x = self.apply_function(function, args);
-        x
+        self.apply_function(function, args)
     }
 
     fn eval_index_expr(&mut self, left: Object, index: Object) -> Object {
