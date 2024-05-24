@@ -5,6 +5,7 @@
 		"lexer",
 		"parser",
 		"std",
-		"repl"
+		"repl",
+		"mdx"
 	]
 }
