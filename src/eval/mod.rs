@@ -64,7 +64,7 @@ impl Eval {
                     Some(val)
                 } else {
                     let Ident(name) = i;
-                    self.store.borrow_mut().llet(name, val);
+                    self.store.borrow_mut().r#let(name, val);
                     None
                 }
             }
@@ -323,7 +323,7 @@ impl Eval {
 
         for (ident, arg) in params.iter().zip(args.iter()) {
             let Ident(name) = ident.clone();
-            scope_store.llet(name, arg.to_owned());
+            scope_store.r#let(name, arg.to_owned());
         }
 
         scope_store
@@ -336,7 +336,7 @@ impl Eval {
         };
         let mut new_store = Store::new_enclosed(self.store.clone());
         for (k, v) in lib_store {
-            new_store.llet(k, v);
+            new_store.r#let(k, v);
         }
         self.store = Rc::new(RefCell::new(new_store));
         None

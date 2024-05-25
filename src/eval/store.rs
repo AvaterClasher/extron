@@ -39,7 +39,7 @@ impl Store {
         }
     }
 
-    pub fn llet(&mut self, name: String, val: Object) -> Option<Object> {
+    pub fn r#let(&mut self, name: String, val: Object) -> Option<Object> {
         self.store.insert(name, val)
     }
 
