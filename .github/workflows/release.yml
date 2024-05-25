@@ -1,0 +1,40 @@
+name: Release
+on: [push]
+
+jobs:
+  release:
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-20.04, windows-latest]
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Rust setup
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: 'target'
+
+      - name: Build
+        run: RUSTFLAGS="-C target-cpu=native" cargo build --release
+          
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+            tag_name: ${{ github.run_number }}
+            release_name: Extron
+            body: Latest Release of the Extron bin for the Extron Language project.
+            draft: true
+            prerelease: false
