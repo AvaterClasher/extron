@@ -29,10 +29,6 @@ pub fn length(args: Vec<Object>) -> Object {
 pub fn input(args: Vec<Object>) -> Object {
     print!("{}", &args[0]);
     let _ = std::io::stdout().flush();
-    match &args[0] {
-        Object::String(s) => {}
-        _ => (),
-    }
     let mut input = String::new();
     std::io::stdin()
         .read_line(&mut input)
