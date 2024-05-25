@@ -7,7 +7,7 @@ use super::Res;
 pub fn add_globals() -> Res {
     let mut globals = HashMap::new();
     globals.insert(String::from("length"), Object::Inbuilt(length));
-    return Res { globals, raw: None }
+    return Res { globals, raw: None };
 }
 
 pub fn length(args: Vec<Object>) -> Object {
@@ -15,12 +15,11 @@ pub fn length(args: Vec<Object>) -> Object {
         return Object::Error(format!(
             "Wrong number of arguments. Got {}. Expected 1.",
             args.len()
-            
         ));
     }
     match &args[0] {
-        Object::String(s) => Object::Int(s.len() as i32),
-        Object::Array(a) => Object::Int(a.len() as i32),
+        Object::String(s) => Object::Number(s.len() as f64),
+        Object::Array(a) => Object::Number(a.len() as f64),
         o => Object::Error(format!("Argument must be a string or array. Got {}", o)),
     }
 }

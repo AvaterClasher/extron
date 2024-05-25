@@ -177,7 +177,7 @@ impl Parser {
             Token::LeftParen => self.parse_grouped_expr(),
             Token::If => self.parse_if_expr(),
             Token::Fn => self.parse_fn_expr(),
-            Token::Int(_) => self.parse_int_literal(),
+            Token::Number(_) => self.parse_number_literal(),
             Token::Boolean(_) => self.parse_boolean_literal(),
             Token::String(_) => self.parse_string_literal(),
             Token::LeftBracket => self.parse_array_literal(),
@@ -247,9 +247,9 @@ impl Parser {
         Some(Expr::Literal(Literal::Object(obj)))
     }
 
-    fn parse_int_literal(&mut self) -> Option<Expr> {
+    fn parse_number_literal(&mut self) -> Option<Expr> {
         match self.current_token {
-            Token::Int(ref mut int) => Some(Expr::Literal(Literal::Int(*int))),
+            Token::Number(ref mut int) => Some(Expr::Literal(Literal::Number(*int))),
             _ => None,
         }
     }
