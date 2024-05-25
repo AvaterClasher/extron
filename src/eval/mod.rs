@@ -323,7 +323,7 @@ impl Eval {
 
         for (ident, arg) in params.iter().zip(args.iter()) {
             let Ident(name) = ident.clone();
-            scope_store.set(name, arg.to_owned());
+            scope_store.llet(name, arg.to_owned());
         }
 
         scope_store

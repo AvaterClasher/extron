@@ -11,7 +11,29 @@ pub fn add_globals() -> Res {
     globals.insert(String::from("tail"), Object::Inbuilt(tail));
     globals.insert(String::from("push"), Object::Inbuilt(push));
     globals.insert(String::from("import"), Object::Inbuilt(import));
-    return Res { globals, raw: None };
+    return Res {
+        globals,
+        raw: Some(
+            "
+    import \"std:util\";
+
+    let map = fn (arr, f) {
+        let res = [];
+        let iter = fn (array) {
+            if (length(array) == 0) {
+                return;
+            } else {
+                set res = push(res, f(array[0]));
+                iter(tail(array));
+            }
+        };
+    iter(arr)
+    return res;
+    }; 
+"
+            .to_string(),
+        ),
+    };
 }
 
 pub fn push(args: Vec<Object>) -> Object {

@@ -12,7 +12,7 @@ pub struct Parser {
 impl Parser {
     pub fn new(lexer: Lexer) -> Self {
         let mut p: Parser = Parser {
-            lexer,
+            lexer: lexer,
             current_token: Token::Eof,
             peek_token: Token::Eof,
             errors: vec![],
@@ -31,7 +31,7 @@ impl Parser {
         let mut statements: Vec<Statement> = vec![];
         while self.current_token != Token::Eof {
             let stmt: Option<Statement> = self.parse_statement();
-            if stmt.is_some() {
+            if stmt != None {
                 statements.push(stmt.unwrap());
             };
             self.next_token();
@@ -182,7 +182,9 @@ impl Parser {
             Token::String(_) => self.parse_string_literal(),
             Token::LeftBracket => self.parse_array_literal(),
             Token::LeftBrace => self.parse_object_literal(),
-            _ => None,
+            _ => {
+                None
+            }
         };
 
         while !self.peek_token(&Token::Semicolon) && precedence < self.next_token_precedence() {
@@ -433,9 +435,8 @@ impl Parser {
         match self.current_token {
             Token::Ident(ref mut ident) => idents.push(Ident(ident.clone())),
             _ => {
-                self.errors.push(format!(
-                    "Expected identifier as parameter name. Got: {}",
-                    self.current_token
+                self.errors.push(String::from(
+                   format!("Expected identifier as parameter name. Got: {}", self.current_token.to_string())
                 ));
                 return None;
             }
@@ -542,7 +543,8 @@ impl Parser {
     fn peek_error(&mut self, t: Token) {
         let msg = format!(
             "Expected next token to be {}, got {} instead",
-            t, self.peek_token
+            t,
+            self.peek_token
         );
         self.errors.push(msg);
     }
