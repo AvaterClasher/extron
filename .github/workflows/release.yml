@@ -1,30 +1,91 @@
 name: release
 
-# .github/workflows/release.yml
-
 on:
-    release:
-        types: [created]
+    push:
+        branches: ["main"]
 
 jobs:
-    release:
-        name: release ${{ matrix.target }}
+    create-development-build:
         runs-on: ubuntu-latest
-        strategy:
-            fail-fast: false
-            matrix:
-                include:
-                    - target: x86_64-pc-windows-gnu
-                      archive: zip
-                    - target: x86_64-unknown-linux-musl
-                      archive: tar.gz tar.xz tar.zst
-                      
+
         steps:
             - uses: actions/checkout@master
-            - name: Compile and release
+
+            - name: Build
+
+              run: cargo build --verbose
+
+            - name: Run tests
+
+              run: cargo test --verbose
+
+            - name: Compile
+
+              id: compile
+
               uses: rust-build/rust-build.action@v1.4.5
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
               with:
-                  RUSTTARGET: ${{ matrix.target }}
-                  ARCHIVE_TYPES: ${{ matrix.archive }}
+                  RUSTTARGET: x86_64-pc-windows-gnu
+
+                  UPLOAD_MODE: none
+
+            - name: Upload artifact
+
+              uses: actions/upload-artifact@v3
+
+              with:
+                  name: Binary
+
+                  path: |
+
+                      ${{ steps.compile.outputs.BUILT_ARCHIVE }}
+
+                      ${{ steps.compile.outputs.BUILT_CHECKSUM }}
+
+            - name: Compile
+
+              id: compile2
+
+              uses: rust-build/rust-build.action@v1.4.5
+
+              with:
+                  RUSTTARGET: x86_64-unknown-linux-musl
+
+                  UPLOAD_MODE: none
+
+            - name: Upload artifact
+
+              uses: actions/upload-artifact@v3
+
+              with:
+                  name: Binary
+
+                  path: |
+
+                      ${{ steps.compile2.outputs.BUILT_ARCHIVE }}
+
+                      ${{ steps.compile2.outputs.BUILT_CHECKSUM }}
+
+            - name: Release
+
+              uses: "marvinpinto/action-automatic-releases@latest"
+
+              with:
+                  repo_token: "${{ secrets.GITHUB_TOKEN }}"
+
+                  automatic_release_tag: "latest"
+
+                  prerelease: true
+
+                  title: "Development Build"
+
+                  files: |
+
+                      ${{ steps.compile.outputs.BUILT_ARCHIVE }}
+
+                      ${{ steps.compile.outputs.BUILT_CHECKSUM }}
+
+                      ${{ steps.compile2.outputs.BUILT_ARCHIVE }}
+
+                      ${{ steps.compile2.outputs.BUILT_CHECKSUM }}
