@@ -48,6 +48,9 @@ pub enum Token {
     Else,
     Return,
     Import,
+    Loop,
+    Break,
+    Continue,
 }
 
 impl Display for Token {

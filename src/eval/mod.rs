@@ -91,6 +91,8 @@ impl Eval {
                 let lib = i;
                 self.extend_global_store(lib)
             }
+            Statement::Break => Some(Object::Break),
+            Statement::Continue => Some(Object::Continue),
         }
     }
 
@@ -101,6 +103,8 @@ impl Eval {
             match self.eval_statement(statement) {
                 Some(Object::Return(e)) => return Some(Object::Return(e)),
                 Some(Object::Error(e)) => return Some(Object::Error(e)),
+                Some(Object::Break) => return Some(Object::Break),
+                Some(Object::Continue) => return Some(Object::Continue),
                 e => result = e,
             }
         }
@@ -152,12 +156,38 @@ impl Eval {
             Expr::Fn { params, body } => Some(Object::Fn(params, body, self.store.clone())),
             Expr::Call { function, args } => Some(self.eval_call_expr(*function, args)),
             Expr::Index { array, index } => {
-                let arr = self.eval_expr(*array);
+                let obj = self.eval_expr(*array);
                 let i = self.eval_expr(*index);
-                if arr.is_some() && i.is_some() {
-                    Some(self.eval_index_expr(arr.unwrap(), i.unwrap()))
+                if let Some(Object::Object(obj)) = obj {
+                    let idx = match i {
+                        Some(Object::Number(i)) => Object::Number(i),
+                        Some(Object::String(i)) => Object::String(i),
+                        Some(Object::Bool(i)) => Object::Bool(i),
+                        _ => return None,
+                    };
+                    Some(self.eval_index_expr(Object::Object(obj.clone()), idx))
+                } else if let Some(Object::Array(arr)) = obj {
+                    let idx = match i {
+                        Some(Object::Number(i)) => Object::Number(i),
+                        _ => return None,
+                    };
+                    Some(self.eval_index_expr(Object::Array(arr.clone()), idx))
                 } else {
                     None
+                }
+            }
+            Expr::Loop { body } => {
+                let mut _result = None;
+                loop {
+                    match self.eval_block_statement((*body).to_vec()) {
+                        Some(Object::Return(e)) => return Some(Object::Return(e)),
+                        Some(Object::Error(e)) => return Some(Object::Error(e)),
+                        Some(Object::Break) => {
+                            break Some(Object::Null);
+                        }
+                        Some(Object::Continue) => continue,
+                        e => _result = e,
+                    }
                 }
             }
         }

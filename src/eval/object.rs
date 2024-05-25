@@ -22,6 +22,9 @@ pub enum Object {
     Inbuilt(InbuiltFunction),
     Array(Vec<Object>),
     Object(HashMap<Object, Object>),
+    Loop(Box<BlockStatement>),
+    Break,
+    Continue,
 }
 
 impl Eq for Object {}
@@ -70,6 +73,9 @@ impl fmt::Display for Object {
 
                 write!(f, "{{{}}}", res)
             }
+            Object::Loop(ref _block) => write!(f, "loop {{ ... }}"),
+            Object::Break => write!(f, "break"),
+            Object::Continue => write!(f, "continue"),
         }
     }
 }

@@ -13,6 +13,9 @@ lazy_static::lazy_static! {
         keywords.insert("import", Token::Import);
         keywords.insert("true", Token::Boolean(true));
         keywords.insert("false", Token::Boolean(false));
+        keywords.insert("loop", Token::Loop);
+        keywords.insert("break", Token::Break);
+        keywords.insert("continue", Token::Continue);
         keywords
     };
 }

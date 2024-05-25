@@ -41,6 +41,8 @@ pub enum Statement {
     Expression(Expr),
     Import(String),
     Set(Ident, Expr),
+    Break,
+    Continue,
 }
 
 #[derive(PartialEq, PartialOrd, Debug, Clone)]
@@ -82,6 +84,10 @@ pub enum Expr {
     Index {
         array: Box<Expr>,
         index: Box<Expr>,
+    },
+
+    Loop {
+        body: BlockStatement,
     },
 }
 

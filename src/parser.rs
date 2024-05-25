@@ -45,6 +45,8 @@ impl Parser {
             Token::Set => self.parse_set_statement(),
             Token::Return => self.parse_return_statement(),
             Token::Import => self.parse_import_statement(),
+            Token::Break => self.parse_break_statement(),
+            Token::Continue => self.parse_continue_statement(),
             _ => self.parse_expr_statement(),
         }
     }
@@ -59,6 +61,22 @@ impl Parser {
             }
             None => None,
         }
+    }
+
+    pub fn parse_break_statement(&mut self) -> Option<Statement> {
+        self.next_token();
+        while !self.current_token(Token::Semicolon) {
+            self.next_token();
+        }
+        Some(Statement::Break)
+    }
+
+    pub fn parse_continue_statement(&mut self) -> Option<Statement> {
+        self.next_token();
+        while !self.current_token(Token::Semicolon) {
+            self.next_token();
+        }
+        Some(Statement::Continue)
     }
 
     pub fn parse_let_statement(&mut self) -> Option<Statement> {
@@ -170,6 +188,12 @@ impl Parser {
         statements
     }
 
+    fn parse_loop_expr(&mut self) -> Option<Expr> {
+        self.next_token();
+        let body = self.parse_block_statement();
+        Some(Expr::Loop { body })
+    }
+
     fn parse_expr(&mut self, precedence: Precedence) -> Option<Expr> {
         let mut left: Option<Expr> = match self.current_token {
             Token::Ident(_) => self.parse_ident(),
@@ -182,9 +206,8 @@ impl Parser {
             Token::String(_) => self.parse_string_literal(),
             Token::LeftBracket => self.parse_array_literal(),
             Token::LeftBrace => self.parse_object_literal(),
-            _ => {
-                None
-            }
+            Token::Loop => self.parse_loop_expr(),
+            _ => None,
         };
 
         while !self.peek_token(&Token::Semicolon) && precedence < self.next_token_precedence() {
@@ -435,9 +458,10 @@ impl Parser {
         match self.current_token {
             Token::Ident(ref mut ident) => idents.push(Ident(ident.clone())),
             _ => {
-                self.errors.push(String::from(
-                   format!("Expected identifier as parameter name. Got: {}", self.current_token.to_string())
-                ));
+                self.errors.push(String::from(format!(
+                    "Expected identifier as parameter name. Got: {}",
+                    self.current_token.to_string()
+                )));
                 return None;
             }
         };
@@ -543,8 +567,7 @@ impl Parser {
     fn peek_error(&mut self, t: Token) {
         let msg = format!(
             "Expected next token to be {}, got {} instead",
-            t,
-            self.peek_token
+            t, self.peek_token
         );
         self.errors.push(msg);
     }
