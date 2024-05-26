@@ -1,0 +1,19 @@
+import "std:math";
+
+let num = round(1.8);
+print(num);
+
+let age = random(1,10);
+print(age);
+
+set num = floor(1.8);
+print(num);
+
+set num = ceil(1.8);
+print(num);
+
+set num = abs(-10);
+print(num);
+
+set num = sqrt(9);
+print(num);

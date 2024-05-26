@@ -1,0 +1,23 @@
+import "std:array";
+
+let arr = [1, 2, 3, 4, 5];
+
+print("Initial array: ", arr);
+
+set arr = push(arr, 6);
+
+print("After Push: ", arr);
+
+set arr = pop(arr);
+
+print("After Pop: ", arr);
+
+set arr = tail(arr);
+
+print("After Tail: ", arr);
+
+set arr = map(arr, fn(x) {
+    return x * 2;
+});
+
+print("After Map: ", arr);

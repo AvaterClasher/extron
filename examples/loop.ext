@@ -1,0 +1,12 @@
+let i = 0;
+
+loop {
+    if (i > 2) {
+        break;
+    }
+    let a = ["a","b","c"];
+
+    print(a[i]);
+
+    set i = i + 1;
+}

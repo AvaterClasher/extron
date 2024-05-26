@@ -1,0 +1,6 @@
+import "std:util";
+
+let name = input("What is your name? ");
+let age = input("How old are you? ");
+print("Hello, "+name+" ! You are "+age+" years old.");
+
