@@ -51,6 +51,7 @@ pub enum Token {
     Loop,
     Break,
     Continue,
+    Typeof
 }
 
 impl Display for Token {

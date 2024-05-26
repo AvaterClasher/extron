@@ -85,7 +85,9 @@ pub enum Expr {
         array: Box<Expr>,
         index: Box<Expr>,
     },
-
+    Typeof {
+        expr: Box<Expr>
+    },
     Loop {
         body: BlockStatement,
     },

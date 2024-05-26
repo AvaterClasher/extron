@@ -188,6 +188,15 @@ impl Parser {
         statements
     }
 
+    fn parse_typof_expr(&mut self) -> Option<Expr> {
+        self.next_token();
+        let expr = match self.parse_expr(Precedence::Lowest) {
+            Some(e) => e,
+            None => return None,
+        };
+        Some(Expr::Typeof { expr: Box::new(expr) })
+    }
+
     fn parse_loop_expr(&mut self) -> Option<Expr> {
         self.next_token();
         let body = self.parse_block_statement();
@@ -206,6 +215,7 @@ impl Parser {
             Token::String(_) => self.parse_string_literal(),
             Token::LeftBracket => self.parse_array_literal(),
             Token::LeftBrace => self.parse_object_literal(),
+            Token::Typeof => self.parse_typof_expr(),
             Token::Loop => self.parse_loop_expr(),
             _ => None,
         };

@@ -16,6 +16,7 @@ lazy_static::lazy_static! {
         keywords.insert("loop", Token::Loop);
         keywords.insert("break", Token::Break);
         keywords.insert("continue", Token::Continue);
+        keywords.insert("typeof", Token::Typeof);
         keywords
     };
 }

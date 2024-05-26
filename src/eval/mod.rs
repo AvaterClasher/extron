@@ -135,6 +135,7 @@ impl Eval {
                     _ => None,
                 }
             }
+            Expr::Typeof { expr } => Some(self.eval_typeof_expr(*expr)),
             Expr::If {
                 cond: condition,
                 then: consequence,
@@ -201,6 +202,19 @@ impl Eval {
             Prefix::Bang => self.eval_not_prefix_expr(expr),
             Prefix::Minus => self.eval_minus_prefix_expr(expr),
             Prefix::Plus => self.eval_plus_prefix_expr(expr),
+        }
+    }
+
+    fn eval_typeof_expr(&mut self, expr: Expr) -> Object {
+        let obj = self.eval_expr(expr);
+        match &obj.unwrap() {
+            Object::Null => Object::String(String::from("null")),
+            Object::Bool(_) => Object::String(String::from("boolean")),
+            Object::Number(_) => Object::String(String::from("number")),
+            Object::String(_) => Object::String(String::from("string")),
+            Object::Array(_) => Object::String(String::from("array")),
+            Object::Object(_) => Object::String(String::from("object")),
+            _ => Object::String(String::from("undefined")),
         }
     }
 
