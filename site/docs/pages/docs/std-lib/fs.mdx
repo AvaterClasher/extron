@@ -1,0 +1,46 @@
+# File System
+
+`std:fs` are functions that provide file system operations in Extron.
+
+## Functions
+
+::::steps
+
+### read_file ( path: string )
+
+Reads the contents of a file and returns it as a string.
+
+```ts
+import "std:fs";
+
+let content = read_file("file.txt");
+print(content);
+
+Console; // [!code ++]
+Hello, World!; // [!code ++]
+```
+
+### write_file ( path: string, content: string )
+
+Writes the given content to a file.
+
+```ts
+import "std:fs";
+write_file("file.txt", "Hello, World!");
+```
+
+### file_exists ( path: string )
+
+Checks if a file exists.
+
+```ts
+import "std:fs";
+
+let exists = file_exists("file.txt");
+print(exists);
+
+Console; // [!code ++]
+true; // [!code ++]
+```
+
+::::

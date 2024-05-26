@@ -1,0 +1,39 @@
+# File System
+
+`std:string` are functions that operates on strings in Extron.
+
+## Functions
+
+::::steps
+
+### replace ( og_str, rep_str, new_str )
+
+Replace all occurrences of a `string` in `original_string` with `new_string`.
+
+```ts
+import "std:string";
+
+let original_string = "Hello, World!";
+let new_string = replace(original_string, "World", "Extron");
+print(new_string);
+
+Console // [!code ++]
+Hello, Extron!; // [!code ++]
+```
+
+### to_string ( value )
+
+Converts a value to a string.
+
+```ts
+import "std:string";
+
+let value = 42;
+let str = to_string(value);
+print(typeof(str));
+
+Console // [!code ++]
+string // [!code ++]
+```
+
+::::
