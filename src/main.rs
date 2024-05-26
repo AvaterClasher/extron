@@ -2,7 +2,7 @@
 extern crate extron;
 
 #[cfg(not(target_os = "emscripten"))]
-use std::env;
+use clap::{Arg, Command};
 
 #[cfg(not(target_os = "emscripten"))]
 use std::fs;
@@ -12,18 +12,32 @@ use std::{ffi::CString, mem, os::raw::c_char};
 
 #[cfg(not(target_os = "emscripten"))]
 fn main() {
-    let args: Vec<String> = env::args().collect();
-    if args.len() != 1 && args[1].as_str() == "run" {
-        let filename = &args[2].split('.').collect::<Vec<_>>();
-        if filename[filename.len() - 1] != "ext" {
-            println!("File must have the extention .ext");
-            return;
-        }
-        let content = fs::read_to_string(&args[2]).expect("Could not read file.");
+    let matches = Command::new("Extron")
+        .version("1.0")
+        .author("Soumyadip Moni <avater.clasher@gmail.com>")
+        .about("Interprets .ext files or starts a REPL")
+        .subcommand(
+            Command::new("run")
+                .about("Runs a specified .ext file")
+                .arg(Arg::new("file")
+                    .help("The .ext file to run")
+                    .required(true)
+                    .index(1)),
+        )
+        .get_matches();
 
-        extron::interpret(content.as_str());
+    if let Some(matches) = matches.subcommand_matches("run") {
+        if let Some(file) = matches.get_one::<String>("file") {
+            let filename = file.split('.').collect::<Vec<_>>();
+            if filename.last() != Some(&"ext") {
+                println!("File must have the extension .ext");
+                return;
+            }
+            let content = fs::read_to_string(file).expect("Could not read file.");
+            extron::interpret(content.as_str());
+        }
     } else {
-        println!("Welcome to the MeowScript REPL. Type in commands to get started.",);
+        println!("Welcome to the Extron REPL. Type in commands to get started.");
         extron::repl::start();
     }
 }
