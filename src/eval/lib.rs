@@ -13,7 +13,7 @@ pub fn load_ext(lib: String) -> Option<HashMap<String, Object>> {
             let program = parser.parse_program();
             let mut eval = Eval::new(Rc::new(RefCell::new(Store::new())));
             eval.eval(program);
-            let store = (&*eval.store.borrow()).to_owned().store;
+            let store = (*eval.store.borrow()).to_owned().store;
             let mut final_env = HashMap::new();
             for (k, v) in store.iter() {
                 final_env.insert(k.clone(), v.clone());
@@ -28,7 +28,7 @@ pub fn load_ext(lib: String) -> Option<HashMap<String, Object>> {
                 let mut parser = Parser::new(Lexer::new(s.to_string()));
                 let program = parser.parse_program();
                 eval.eval(program);
-                let store = (&*eval.store.borrow()).to_owned().store;
+                let store = (*eval.store.borrow()).to_owned().store;
                 let mut final_env = HashMap::new();
                 for (k, v) in libs.globals.iter() {
                     final_env.insert(k.to_string(), v.to_owned());
@@ -53,7 +53,7 @@ pub fn load_ext(lib: String) -> Option<HashMap<String, Object>> {
     };
     let mut eval = Eval::new(Rc::new(RefCell::new(Store::new())));
     eval.eval(program);
-    let store = (&*eval.store.borrow()).to_owned().store;
+    let store = (*eval.store.borrow()).to_owned().store;
     let mut final_env = HashMap::new();
     for (k, v) in store.iter() {
         final_env.insert(k.clone(), v.clone());

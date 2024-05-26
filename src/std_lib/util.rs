@@ -10,7 +10,7 @@ pub fn add_globals() -> Res {
     globals.insert(String::from("length"), Object::Inbuilt(length));
     globals.insert(String::from("input"), Object::Inbuilt(input));
     globals.insert(String::from("sleep"), Object::Inbuilt(sleep));
-    return Res { globals, raw: None };
+    Res { globals, raw: None }
 }
 
 pub fn length(args: Vec<Object>) -> Object {
@@ -35,7 +35,7 @@ pub fn input(args: Vec<Object>) -> Object {
         .read_line(&mut input)
         .expect("Failed to read line");
     input = input.trim_end().to_string();
-    return Object::String(input);
+    Object::String(input)
 }
 
 pub fn sleep(args: Vec<Object>) -> Object {

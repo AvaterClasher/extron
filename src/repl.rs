@@ -1,5 +1,5 @@
 use crate::{
-    eval::{store::Store, object::Object, Eval},
+    eval::{store::Store, Eval},
     lexer::Lexer,
     parser::Parser,
 };
@@ -32,7 +32,7 @@ pub fn start() {
             print_parse_errors(parser.errors);
             continue;
         }
-        let res = evaluator.eval(program);
+        let _res = evaluator.eval(program);
         // println!("{}", res.unwrap_or(Object::Null));
     }
 }

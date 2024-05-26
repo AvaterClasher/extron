@@ -33,5 +33,4 @@ pub fn interpret(content: &str) {
             _ => println!("{}", o),
         }
     }
-    return;
 }

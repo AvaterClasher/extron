@@ -11,7 +11,7 @@ pub fn add_globals() -> Res {
     globals.insert(String::from("tail"), Object::Inbuilt(tail));
     globals.insert(String::from("push"), Object::Inbuilt(push));
     globals.insert(String::from("import"), Object::Inbuilt(import));
-    return Res {
+    Res {
         globals,
         raw: Some(
             "
@@ -33,7 +33,7 @@ pub fn add_globals() -> Res {
 "
             .to_string(),
         ),
-    };
+    }
 }
 
 pub fn push(args: Vec<Object>) -> Object {
