@@ -1,8 +1,16 @@
+#[cfg(target_os = "emscripten")]
 extern crate extron;
 
+#[cfg(not(target_os = "emscripten"))]
 use std::env;
+
+#[cfg(not(target_os = "emscripten"))]
 use std::fs;
-use extron::repl;
+
+#[cfg(target_os = "emscripten")]
+use std::{ffi::CString, mem, os::raw::c_char};
+
+#[cfg(not(target_os = "emscripten"))]
 fn main() {
     let args: Vec<String> = env::args().collect();
     if args.len() != 1 && args[1].as_str() == "run" {
@@ -15,11 +23,40 @@ fn main() {
 
         extron::interpret(content.as_str());
     } else {
-    
-        println!(
-            "Welcome to the Extron REPL. Type in commands to get started.",
-        );
-        repl::start();
+        println!("Welcome to the MeowScript REPL. Type in commands to get started.",);
+        extron::repl::start();
     }
+}
 
+#[cfg(target_os = "emscripten")]
+fn main() {}
+
+#[cfg(target_os = "emscripten")]
+/// # Safety
+#[no_mangle]
+pub unsafe extern "C" fn interpret(src: *mut c_char) -> usize {
+    let code = CString::from_raw(src).to_str().unwrap().to_string();
+    let _ = extron::interpret(&code);
+    0
+}
+
+#[cfg(target_os = "emscripten")]
+#[no_mangle]
+pub extern "C" fn alloc(len: usize) -> *mut u8 {
+    let mut buf: Vec<u8> = Vec::with_capacity(len);
+
+    let ptr = buf.as_mut_ptr();
+
+    mem::forget(buf);
+
+    ptr
+}
+
+#[cfg(target_os = "emscripten")]
+/// # Safety
+#[no_mangle]
+pub unsafe extern "C" fn dealloc(ptr: *mut u8, len: usize) {
+    let data = Vec::from_raw_parts(ptr, len, len);
+
+    mem::drop(data)
 }
