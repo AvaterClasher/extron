@@ -1,0 +1,54 @@
+# Util
+
+`std:util` provides utility functions that are commonly used in Extron programs.
+
+## Functions
+
+::::steps
+
+### length ( array | string )
+
+Returns the length of the given array or string.
+
+```ts
+import "std:util";
+
+const arr = [1, 2, 3, 4, 5];
+print(length(arr));
+
+Console // [!code ++]
+5 // [!code ++]
+```
+
+### input ( prompt: string )
+
+Prompts the user for input and returns the entered value.
+
+```ts
+import "std:util";
+
+let name = input("Enter your name: ");
+print(name);
+
+Console // [!code ++]
+Enter your name: John // [!code ++]
+John // [!code ++]
+```
+
+### sleep ( milliseconds: number )
+
+Pauses the program for the given number of milliseconds.
+
+```ts
+import "std:util";
+
+print("Hello");
+sleep(1000);
+print("World");
+
+Console // [!code ++]
+Hello // [!code ++]
+World // [!code ++]
+```
+
+::::

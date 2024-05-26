@@ -1,0 +1,86 @@
+# Array
+
+`std:array` provides functions for working with arrays.
+
+## Functions
+
+::::steps
+
+### push ( array, value )
+
+Addes the given value to the end of the array.
+
+
+```ts
+import "std:array";
+
+let arr = [1, 2, 3];
+push(arr, 4);
+print(arr);
+
+Console // [!code ++]
+[1, 2, 3, 4] // [!code ++]
+```
+
+### pop ( array )
+
+Removes the last element from the array and returns it.
+
+```ts
+import "std:array";
+
+let arr = [1, 2, 3];
+let last = pop(arr);
+print(last);
+print(arr);
+
+Console // [!code ++]
+3 // [!code ++]
+[1, 2] // [!code ++]
+```
+
+### head ( array )
+
+Returns the first element of the array.
+
+```ts
+import "std:array";
+
+let arr = [1, 2, 3];
+let first = head(arr);
+print(first);
+
+Console // [!code ++]
+1 // [!code ++]
+```
+
+### tail ( array )
+
+Removes the first element of the array and returns the rest.
+
+```ts
+import "std:array";
+
+let arr = [1, 2, 3];
+let rest = tail(arr);
+print(rest);
+
+Console // [!code ++]
+[2, 3] // [!code ++]
+```
+
+### includes ( array, value )
+
+Returns `true` if the array contains the given value, otherwise `false`.
+
+```ts
+import "std:array";
+
+let arr = [1, 2, 3];
+let hasTwo = includes(arr, 2);
+print(hasTwo);
+
+Console // [!code ++]
+true // [!code ++]
+```
+::::
