@@ -1,0 +1,26 @@
+# Coding in Extron
+
+## Overview
+
+Lets start with a very simple program in Extron to get the feel of the language.
+
+``` ts [example.ext]
+let i = 0;
+
+set i = 3;
+
+print(i);
+
+Console // [!code ++]
+3 // [!code ++]
+```
+
+As we can see here for initializing a variable we use `let` keyword and for assigning a value to a variable again we can use `set` keyword. `print` is used to print the value of a variable.
+To learn more about the keywords refer [here](/docs/concepts/Syntax).
+
+## How to run the code
+
+1. Make a new file with `.ext` extension in your editor. 
+2. Write the code in the file.
+3. If the extron package is available in your system then you can run the code by using the command `extron run <filename>.ext` in the terminal.
+4. Or else if it is available in the directory your working on then you can run the code by using the command `./extron run <filename>.ext` in the terminal.

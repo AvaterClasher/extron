@@ -1,0 +1,116 @@
+import { Callout } from 'vocs/components'
+
+# Syntax
+
+## Syntax Examples
+
+::::steps
+
+### Modules and Imports
+
+- To import a module, use the `import` keyword followed by the module `filename`, `standard library name`, or a `URL`.
+
+```ts
+import "./module";
+import "std:math";
+import "http://example.com/module.ext";
+```
+
+### Variables
+
+- To declare a variable, use the `let` keyword followed by the variable name.
+
+```ts
+let name = "Extron";
+let x = 12;
+let y = [1, 2, 3];
+```
+
+- To re-assign a value to a variable, use the `set` keyword followed by the variable name.
+
+```ts
+set name = "Hello Visitor";
+set x = 1;
+```
+<Callout type="warning">
+  Do not use `set` to declare a variable.
+</Callout>
+
+### Functions
+
+- All functions must be assigned to a variable. To declare a function use the `fn` keyword.
+
+```ts
+let add = fn(a, b) {
+    a + b;
+};
+
+print(add (1, 2));
+
+Console // [!code ++]
+3 // [!code ++]
+```
+
+<Callout type="success">
+  The return keyword is optional in Extron.The function will return the last expression in the function body.
+</Callout>
+
+### Conditional Statements
+
+- To create a conditional statement, use the `if` keyword followed by the condition.
+
+```ts
+let x = 10;
+if (x > 5) {
+    print("x is greater than 5");
+} else {
+    print("x is less than or equal to 5");
+}
+
+Console // [!code ++]
+x is greater than 5 // [!code ++]
+```
+
+### Loops
+
+- To create a loop, use the `loop` keyword followed by the loop condition. Use the `break` keyword to exit the loop.
+
+```ts
+let i = 0;
+
+loop {
+    if (i > 2) {
+        break;
+    }
+    let a = ["a","b","c"];
+    print(a[i]);
+    set i = i + 1;
+}
+
+Console // [!code ++]
+a // [!code ++]
+b // [!code ++]
+c // [!code ++]
+```
+
+### Type Checking
+
+- To check the type of a variable, use the `typeof` keyword followed by the variable name.
+
+```ts
+let x = 10;
+print(typeof x);
+
+Console // [!code ++]
+number // [!code ++]
+```
+
+### Comments
+
+- To create a single-line comment, use the `//` symbol.
+
+```ts
+// This is a single-line comment
+```
+
+::::

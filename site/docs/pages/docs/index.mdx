@@ -1,18 +1,29 @@
-# Installation Guide
+# Getting Started
 
-## Installing in Linux
+## Overview
 
-Just run the [install script](install.sh) in your terminal:
+Extron is a simple interpreter written in [Rust](https://www.rust-lang.org).
 
-```sh
+You can write files for extron in its REPL (Read-Eval-Print-Loop) or in a file with the `.ext` extension.
+
+## Installation
+
+### For installing in Linux
+
+Just run this [script](https://github.com/AvaterClasher/extron/blob/main/install.sh).
+
+```bash
 sh install.sh
 ```
 
-## Installing on Windows
+### For installing in Windows
 
 Download the latest version of Extron from [here](https://github.com/AvaterClasher/extron/releases/download/latest/extron.exe).
 
-Then edit your system's `PATH` variable and add: `{your-path-here}\extron.exe`.
+Then edit your system's `PATH` variable and add: 
+
+`{your-path-here}\extron.exe`.
+
 See [this guide on editing the system `PATH`](https://www.java.com/en/download/help/path.html)
 from the Java documentation.
 
@@ -35,6 +46,8 @@ from the Java documentation.
    # For running the REPL (Read-Eval-Print-Loop)
    cargo run
    ```
+
+
 
    ```bash
    # For running a Extron (.ext) file
