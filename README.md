@@ -17,13 +17,42 @@ standard library, and documentation.
 
 ## Quick Start
 
-Read ["Installation"] from [Documentation].
+### Installing on Linux or WSL (Windows Subsystem for Linux)
 
-["Installation"]: https://extron.vercel.app/docs#getting-started
+```bash
+curl -sfL https://raw.githubusercontent.com/AvaterClasher/extron/main/install.sh | sh
+```
+
+### Installing on Windows
+
+```powershell
+iwr -useb https://raw.githubusercontent.com/AvaterClasher/extron/main/install.ps1 | iex
+```
 
 ## Installing from Source
 
-If you really want to install from source, see [INSTALL.md](INSTALL.md).
+### Build steps
+
+1. Clone the [source] with `git`:
+
+   ```sh
+   git clone https://github.com/AvaterClasher/extron.git
+   cd extron
+   ```
+
+[source]: https://github.com/AvaterClasher/extron
+
+2. Run the following command to build the project:
+
+   ```bash
+   # For running the REPL (Read-Eval-Print-Loop)
+   cargo run
+   ```
+
+   ```bash
+   # For running a Extron (.ext) file
+    cargo run run <path-to-file>
+   ```
 
 ## Getting Help
 

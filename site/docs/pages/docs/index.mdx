@@ -8,26 +8,21 @@ You can write files for extron in its REPL (Read-Eval-Print-Loop) or in a file w
 
 ## Installation
 
-### For installing in Linux
+### For installing in Linux or WSL (Windows subsystem for Linux)
 
-Just run this [script](https://github.com/AvaterClasher/extron/blob/main/install.sh).
+Just run this script below to download extron.
 
 ```bash
-sh install.sh
+curl -sfL https://raw.githubusercontent.com/AvaterClasher/extron/main/install.sh | sh
 ```
 
 ### For installing in Windows
 
-Download the latest version of Extron from [here](https://github.com/AvaterClasher/extron/releases/download/latest/extron.exe).
+Just run this script below to download extron.
 
-Then edit your system's `PATH` variable and add: 
-`your-path-here` means the folder where the extron.exe is stored.
-Do not add the `/extron.exe` like this inside the path.
-
-`{your-path-here}`
-
-See [this guide on editing the system `PATH`](https://www.java.com/en/download/help/path.html)
-from the Java documentation.
+```powershell
+iwr -useb https://raw.githubusercontent.com/AvaterClasher/extron/main/install.ps1 | iex
+```
 
 ## Building Locally
 
@@ -48,9 +43,7 @@ from the Java documentation.
    # For running the REPL (Read-Eval-Print-Loop)
    cargo run
    ```
-
-
-
+   
    ```bash
    # For running a Extron (.ext) file
     cargo run run <path-to-file>
