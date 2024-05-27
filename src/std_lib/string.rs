@@ -8,6 +8,7 @@ pub fn add_globals() -> Res {
     let mut globals = HashMap::new();
     globals.insert(String::from("replace"), Object::Inbuilt(replace));
     globals.insert(String::from("to_string"), Object::Inbuilt(to_string));
+    globals.insert(String::from("to_chars"), Object::Inbuilt(char));
     Res { globals, raw: None }
 }
 
@@ -53,5 +54,22 @@ pub fn to_string(args: Vec<Object>) -> Object {
         Object::Fn(..) => Object::String(String::from("[Function]")),
         Object::Inbuilt(..) => Object::String(String::from("[Inbuilt Function]")),
         o => Object::String(format!("{}", o)),
+    }
+}
+
+pub fn char(args: Vec<Object>) -> Object {
+    if args.len() != 1 {
+        return Object::Error(format!(
+            "Wrong number of arguments. Got {}. Expected 1.",
+            args.len()
+        ));
+    }
+
+    match &args[0] {
+        Object::String(s) => {
+            let char_vec: Vec<Object> = s.chars().map(|c| Object::String(c.to_string())).collect();
+            Object::Array(char_vec)
+        }
+        o => Object::Error(format!("First argument must be a string. Got {}", o)),
     }
 }
