@@ -21,3 +21,11 @@ set arr = map(arr, fn(x) {
 });
 
 print("After Map: ", arr);
+
+let arrt = slice(arr, 2, 4);
+
+print("After Slice: ", arrt);
+
+set arrt = swap(arrt, 0, 23);
+
+print("After Swap: ", arrt);

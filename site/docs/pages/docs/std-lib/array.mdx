@@ -69,6 +69,23 @@ Console // [!code ++]
 [2, 3] // [!code ++]
 ```
 
+### map ( array, callback )
+
+Returns a new array with the results of calling a provided function on every element in the array.
+
+```ts
+import "std:array";
+
+let arr = [1, 2, 3];
+let doubled = map(arr, fn(x) {
+    return x * 2;
+});
+print(doubled);
+
+Console // [!code ++]
+[2, 4, 6] // [!code ++]
+```
+
 ### includes ( array, value )
 
 Returns `true` if the array contains the given value, otherwise `false`.
@@ -82,5 +99,35 @@ print(hasTwo);
 
 Console // [!code ++]
 true // [!code ++]
+```
+
+### slice ( array, first_index, last_index )
+
+Returns a new array containing the elements from `first_index` to `last_index` (exclusive).
+
+```ts
+import "std:array";
+
+let arr = [1, 2, 3, 4, 5];
+let sliced = slice(arr, 1, 4);
+print(sliced);
+
+Console // [!code ++]
+[2, 3, 4] // [!code ++]
+```
+
+### swap ( array, index, value )
+
+Replaces the element at the given index with the given value.
+
+```ts
+import "std:array";
+
+let arr = [1, 2, 3];
+swap(arr, 1, 4);
+print(arr);
+
+Console // [!code ++]
+[1, 4, 3] // [!code ++]
 ```
 ::::

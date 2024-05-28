@@ -11,6 +11,8 @@ pub fn add_globals() -> Res {
     globals.insert(String::from("tail"), Object::Inbuilt(tail));
     globals.insert(String::from("push"), Object::Inbuilt(push));
     globals.insert(String::from("import"), Object::Inbuilt(import));
+    globals.insert(String::from("slice"), Object::Inbuilt(slice));
+    globals.insert(String::from("swap"), Object::Inbuilt(ind_switch));
     Res {
         globals,
         raw: Some(
@@ -112,6 +114,53 @@ pub fn import(args: Vec<Object>) -> Object {
         Object::Array(a) => {
             let array = a.clone();
             Object::Bool(array.contains(&args[1]))
+        }
+        o => Object::Error(format!("First argument must be an array. Got {}", o)),
+    }
+}
+
+pub fn slice(args: Vec<Object>) -> Object {
+    if args.len() != 3 {
+        return Object::Error(format!(
+            "Wrong number of arguments. Got {}. Expected 3.",
+            args.len()
+        ));
+    }
+    match &args[0] {
+        Object::Array(a) => {
+            let array = a.clone();
+            let start = match &args[1] {
+                Object::Number(i) => *i as usize,
+                o => return Object::Error(format!("Second argument must be an int. Got {}", o)),
+            };
+            let end = match &args[2] {
+                Object::Number(i) => *i as usize,
+                o => return Object::Error(format!("Third argument must be an int. Got {}", o)),
+            };
+            Object::Array(array[start..end].to_vec())
+        }
+        o => Object::Error(format!("First argument must be an array. Got {}", o)),
+    }
+}
+
+pub fn ind_switch(args: Vec<Object>) -> Object {
+    if args.len() != 3 {
+        return Object::Error(format!(
+            "Wrong number of arguments. Got {}. Expected 3.",
+            args.len()
+        ));
+    }
+    match &args[0] {
+        Object::Array(a) => {
+            let array = a.clone();
+            let index = match &args[1] {
+                Object::Number(i) => *i as usize,
+                o => return Object::Error(format!("Second argument must be an int. Got {}", o)),
+            };
+            let value = args[2].clone();
+            let mut new_array = array.clone();
+            new_array[index] = value;
+            Object::Array(new_array)
         }
         o => Object::Error(format!("First argument must be an array. Got {}", o)),
     }
